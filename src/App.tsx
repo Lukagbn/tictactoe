@@ -3,6 +3,8 @@ import "./App.sass";
 import Winner from "./components/Winner";
 import Circle from "./components/Circle/Circle";
 import Cross from "./components/Cross/Cross";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
 
 const winningCombos = [
   [0, 1, 2],
@@ -30,7 +32,7 @@ function App() {
     }
     return setChoices((prev) => [...prev, index]);
   }
-  // ვკითხო ეს ვუნქცია
+
   function checkWin(playerIndex: number[]) {
     return winningCombos.some((combo) =>
       combo.every((index) => playerIndex.includes(index)),
@@ -38,16 +40,18 @@ function App() {
   }
   function returnWinner() {
     if (checkWin(playerOneIndex)) {
-      return <Winner player="one" />;
+      return <Winner player="first" />;
     } else if (checkWin(playerTwoIndex)) {
-      return <Winner player="two" />;
+      return <Winner player="second" />;
     }
   }
 
   return (
     <main>
       {returnWinner()}
-      <h2 className="turn">{user ? "player second's" : "player one's"} Turn</h2>
+      <h2 className="turn">
+        {user ? "second player's" : "first player's"} turn
+      </h2>
       <section className="board">
         {Array.from({ length: 9 }).map((_, index) => {
           return (
@@ -60,7 +64,6 @@ function App() {
                 setUser(!user);
               }}
             >
-              {/* ვკითხო ეს ნაწილი */}
               {playerOneIndex.includes(index) ? (
                 <Cross />
               ) : playerTwoIndex.includes(index) ? (

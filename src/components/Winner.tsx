@@ -1,14 +1,16 @@
 import "./Winner.sass";
 
 type Player = {
-  player: "one" | "two";
+  player: "first" | "second";
 };
 
 function Winner({ player }: Player) {
   return (
     <div className="overlay">
-      <h2 className="winner">winner is {player}</h2>
-      <button onClick={() => window.location.reload()}>restart</button>
+      <div className="container">
+        <h2>{player} player wins!</h2>
+        <button onClick={() => window.location.reload()}>restart</button>
+      </div>
     </div>
   );
 }
