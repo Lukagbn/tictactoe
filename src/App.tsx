@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./App.sass";
-import Winner from "./components/Winner";
+import Winner from "./components/Winner/Winner";
 import Circle from "./components/Circle/Circle";
 import Cross from "./components/Cross/Cross";
 import "@fontsource/roboto/500.css";
@@ -19,6 +19,7 @@ const winningCombos = [
 
 function App() {
   const [user, setUser] = useState<boolean>(false);
+  const [overlay, setOverlay] = useState<boolean>(true);
   const [choices, setChoices] = useState<number[]>([]);
   const [playerOneIndex, setplayerOneIndex] = useState<number[]>([]);
   const [playerTwoIndex, setplayerTwoIndex] = useState<number[]>([]);
@@ -49,10 +50,16 @@ function App() {
   return (
     <main>
       {returnWinner()}
-      <h2 className="turn">
-        {user ? "second player's" : "first player's"} turn
-      </h2>
-      <section className="board">
+      {!overlay && (
+        <h2 className="turn">
+          {checkWin(playerOneIndex) || checkWin(playerTwoIndex)
+            ? null
+            : user
+              ? "second player's turn"
+              : "first player's turn"}
+        </h2>
+      )}
+      <section className="board" style={{ margin: overlay ? "auto" : "" }}>
         {Array.from({ length: 9 }).map((_, index) => {
           return (
             <div
@@ -73,6 +80,13 @@ function App() {
           );
         })}
       </section>
+      {overlay && (
+        <div className="overlay">
+          <button className="start" onClick={() => setOverlay(false)}>
+            start game
+          </button>
+        </div>
+      )}
     </main>
   );
 }
