@@ -44,6 +44,8 @@ function App() {
       return <Winner player="first" />;
     } else if (checkWin(playerTwoIndex)) {
       return <Winner player="second" />;
+    } else if (choices.length === 9) {
+      return <Winner player="tie" />;
     }
   }
 
